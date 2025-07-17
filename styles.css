@@ -1,0 +1,83 @@
+body{
+  background-color: #0f1c36;
+  color: #61ff00;
+  margin-left: 20px;
+  margin-right: 20px;
+  font-family: "Orbitron", sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.contenedorOpciones, .contenedorResultado, .contenedorRonda{
+  margin: auto;
+  max-width: 600px;
+  border-radius: 5px;
+}
+.contenedorOpciones{
+  display: flex;
+  flex-direction:column;
+  border: solid 2px red;
+  padding: 2px;
+}
+.contenedorBotones{
+  display:flex;
+  justify-content:space-evenly;
+  padding:10px;
+}
+
+h2,h1{
+  text-align:center;
+  letter-spacing: 1px;
+}
+footer{
+  margin-top: auto;
+  color:#61ff00;
+}
+h1{
+font-size:40px;
+}
+h2{
+  font-size:30px;
+}
+p, button, footer{
+  font-size:20px;
+  text-align: center;
+  font-weight: bold;
+  padding: 5px;
+}
+
+button{
+  color:#61ff00;
+  border-color: #61ff00;
+  border-radius: 5px;
+  background-color: #0f1c36;
+  padding: 5px 10px;
+}
+.contenedorRonda{
+  display:flex;
+  flex-direction:column;
+  border:solid 2px cyan;
+  margin-top:4px;
+}
+
+.contenedorResultado{
+  margin-top:4px;
+  border:solid 2px gold;
+  display:flex;
+  flex-direction:column;
+}
+.mostrarPuntaje, .mensajeFinJuego{
+  text-align:center;
+}
+.elecciones{
+  display:flex;
+  justify-content: space-around;
+}
+.eleccionGente, .eleccionMaquina{
+  text-align: center;
+}
+button{
+  font-size: larger;
+  align-self: center;
+  
+}
