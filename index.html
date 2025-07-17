@@ -3,12 +3,40 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="UTF-8">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="styles.css">
     </head>
     <body>
-        <script src="script.js">
-        </script>
-        <h1>Hello</h1>
-        <h2>Rock-Paper-Scissors Game</h2> 
-        <p>Open the DevTools console and refresh to play</p>
+        <script src="script.js" defer></script>
+        <h1>Piedra Papel Tijera</h1>
+        <main>
+            <div class="contenedorOpciones">
+              <h2>Elige tu opción</h2>
+              <div class="contenedorBotones">
+                <button class="btnPiedra">Piedra</button>
+                <button class="btnPapel">Papel</button>
+                <button class="btnTijera">Tijera</button>
+              </div>
+            </div>
+            <div class="contenedorRonda">
+              <h2>Tu elección vs la máquina</h2>
+              <div class="elecciones">
+                <div class="eleccionGente"></div>
+                <div class="eleccionMaquina"></div>
+                <div class="resultadoRonda"></div>
+              </div>
+            </div>
+            <div class="contenedorResultado">
+              <h2>Resultados</h2>
+              <div class="mostrarPuntaje"></div>
+              <div class="mostrarGanador"></div>
+              <div class="mensajeFinJuego"></div>
+            </div>
+        </main>
+        <footer class="footer">
+            Copyright © <a href="https://github.com/FeoLED" target="_blank">FeoLED 2025</a>
+        </footer>
     </body>
 </html>
