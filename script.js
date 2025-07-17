@@ -1,77 +1,115 @@
-//Objective: Rock-Paper-Scissors game with the machine on console
-
-//First, getComputerChoice function
-function getComputerChoice(){
-    //Math.random gives number
-    let n = Math.floor(Math.random()*10);
-    let result="";
-    //conditional to decide computer choice
-    if(n<4){
-        result="rock";
-    }else if(n<7){
-        result="paper";
-    }else{
-        result="scissors";
-    }
-    return result;
+let puntajeHumano = 0;
+let puntajeMaquina = 0;
+function resetearJuego() {
+  puntajeHumano = 0;
+  puntajeMaquina = 0;
+  nuevaEleccionGente.textContent = "";
+  nuevaEleccionMaquina.textContent = "";
+  nuevoResultadoRonda.textContent = "";
+  nuevoPuntaje.textContent = "";
+  document.querySelector(".mensajeFinJuego").innerHTML = "";
+  document.querySelector(".mostrarGanador").innerHTML = "";
+  let botones = document.querySelectorAll(".btnPiedra, .btnPapel, .btnTijera");
+  botones.forEach((boton) => {
+    boton.disabled = false;
+  });
+}
+function eleccionMaquina(){
+  let num = Math.floor(Math.random()*10);
+  if(num<4){
+    return "Piedra";
+  }else if(num>=4 && num<7){
+    return "Papel";
+  }else{
+    return "Tijera";
+  } 
 }
 
-//Next, getHumanChoice function
-function getHumanChoice(){
-    let ask=prompt("Insert your choice (rock, paper, scissors):");
-    return ask.toLowerCase();
-}
+let gente;
+//DECLARAMOS LOS ELEMENTOS PARA MOSTRAR LA ELECCION DE LOS JUGADORES
+let mostrarEleccionGente = document.querySelector(".eleccionGente");
+let nuevaEleccionGente = document.createElement("p");
+mostrarEleccionGente.appendChild(nuevaEleccionGente);
+let mostrarEleccionMaquina = document.querySelector(".eleccionMaquina");
+let nuevaEleccionMaquina = document.createElement("p");
+mostrarEleccionMaquina.appendChild(nuevaEleccionMaquina);
+//DECLARAMOS LOS ELEMENTOS PARA MOSTRAR EL RESULTADO DE LA RONDA
+let mostrarResultadoRonda = document.querySelector(".resultadoRonda");
+let nuevoResultadoRonda = document.createElement("p");
+mostrarResultadoRonda.appendChild(nuevoResultadoRonda);
+//DEBERIAMOS MOSTRAR LOS PUNTAJES A MEDIDA QUE SE JUEGA
+let mostrarPuntajes = document.querySelector(".mostrarPuntaje");
+let nuevoPuntaje = document.createElement("p");
+mostrarPuntajes.appendChild(nuevoPuntaje);
 
-//Finally, playGame function. To play five rounds
-function playGame(){
-    //Player scores
-    let computerChoice = "";
-    let humanChoice = "";
-    let humanScore=0;
-    let computerScore=0;
-    let resultMessage="";
-    let scoreMessage="";
-    function playRound(computerChoice, humanChoice){
-        let message="";
-        if((humanChoice=="paper")&&(computerChoice=="rock")){
-            message="You win";
-        }else if((humanChoice=="paper")&&(computerChoice=="scissors")){
-            message="You lose";
-        }else if((humanChoice=="rock")&&(computerChoice=="scissors")){
-            message="You win";
-        }else if((humanChoice=="rock")&&(computerChoice=="paper")){
-            message="You lose";
-        }else if((humanChoice=="scissors")&&(computerChoice=="paper")){
-            message="You win";
-        }else if((humanChoice=="scissors")&&(computerChoice=="rock")){
-            message="You lose";
-        }else if(humanChoice==computerChoice){
-            message="It's a draw";
+function manejarBotones(){
+  //MANEJADOR DE BOTONES
+  let botones = document.querySelectorAll("button");
+  botones.forEach((boton)=>{
+    boton.addEventListener("click", (e)=>{
+      //CONDICIONAL PARA FINALIZAR JUEGO CUANDO UN JUGADOR LLEGA A 5 PUNTOS
+      if((puntajeHumano===5)||(puntajeMaquina===5)){
+        let mostrarGanador = document.querySelector(".mostrarGanador");
+        let nuevoGanador = document.createElement("h2");
+        if(puntajeHumano>puntajeMaquina){
+          nuevoGanador.textContent = "Ganaste el juego!";
+        }else if(puntajeHumano<puntajeMaquina){
+          nuevoGanador.textContent = "Ha ganado la máquina!";
         }
-        console.log(message);
-        return message;
+        mostrarGanador.appendChild(nuevoGanador);
+
+      
+        let mostrarFinJuego = document.querySelector(".mensajeFinJuego");
+        mostrarFinJuego.innerHTML = `
+          <p>Juego terminado!</p>
+          <button id="reset-btn" style="margin:10px">Jugar de nuevo</button>
+        `;
+        document.getElementById("reset-btn").addEventListener("click", resetearJuego);
+        botones.forEach((boton) => {
+          boton.disabled = true;
+        });
+        return;
+      }
+
+    //ACA MUESTRA LA ELECCION DEL JUGADOR
+    gente = e.target.textContent;
+    let msje = "Elegiste " + gente;
+    nuevaEleccionGente.textContent = msje;
+    //ACA MUESTRA LA ELECCION DE LA MAQUINA
+    let maqui = eleccionMaquina();
+    nuevaEleccionMaquina.textContent = "Máquina elige " + maqui;
+    //ACA MUESTRA EL RESULTADO DE LA RONDA
+    let resultado = ronda(gente, maqui);
+    nuevoResultadoRonda.textContent = resultado;
+      
+    //ACA, DETERMINA QUIEN GANA UNA RONDA Y SUMA LOS PUNTAJES
+    if(resultado.includes("Ganaste")){
+      puntajeHumano++;
+    }else if(resultado.includes("Perdiste")){
+      puntajeMaquina++;
     }
-    for(let i=0; i<5; i++){
-        console.log("***Round " + (i+1) +"***")
-        computerChoice = getComputerChoice();
-        console.log("Computer choice: "+ computerChoice);
-        humanChoice = getHumanChoice();
-        console.log("Your choice: "+ humanChoice);
-        resultMessage=playRound(computerChoice,humanChoice);
-        if(resultMessage=="You win"){
-            humanScore++;
-        }else if(resultMessage=="You lose"){
-            computerScore++;
-        }
-    }
-    if(humanScore>computerScore){
-        scoreMessage="You: " + humanScore + "; Computer: " + computerScore + ". You win.";
-    }else if(computerScore>humanScore){
-        scoreMessage="You: " + humanScore + "; Computer: " + computerScore + ". You lose.";
-    }else if(humanScore==computerScore){
-        scoreMessage="You: " + humanScore + "; Computer: " + computerScore + ". It's a draw."
-    }
-    return scoreMessage;
-}
-let game = playGame();
-console.log(game);
+    // //DEBERIAMOS MOSTRAR LOS PUNTAJES A MEDIDA QUE SE JUEGA
+    nuevoPuntaje.textContent = "Tú: " + puntajeHumano + "; Máquina: " + puntajeMaquina;
+    });
+  });
+};
+ 
+function ronda(gente, eleccionMaquina){
+  if((gente=="Papel")&&(eleccionMaquina=="Piedra")){
+    return "Ganaste esta ronda";
+  }else if((gente=="Papel")&&(eleccionMaquina=="Tijera")){
+    return "Perdiste esta ronda";
+  }else if((gente=="Piedra")&&(eleccionMaquina=="Tijera")){
+    return "Ganaste esta ronda";
+  }else if((gente=="Piedra")&&(eleccionMaquina=="Papel")){
+    return "Perdiste esta ronda";
+  }else if((gente=="Tijera")&&(eleccionMaquina=="Papel")){
+    return "Ganaste esta ronda";
+  }else if((gente=="Tijera")&&(eleccionMaquina=="Piedra")){
+    return "Perdiste esta ronda";
+  }else if(gente==eleccionMaquina){
+    return "Empate";
+  }
+};
+
+manejarBotones();
